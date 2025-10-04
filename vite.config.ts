@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { mochaPlugins } from "@getmocha/vite-plugins";
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
   const isGitHubPages = process.env.GITHUB_PAGES === 'true';
   const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'Protozen';
   
@@ -13,7 +13,7 @@ export default defineConfig(({ command }) => {
     plugins: [...mochaPlugins(process.env as any), react(), cloudflare()],
     base: isGitHubPages ? `/${repoName}/` : '/',
     server: {
-      allowedHosts: true,
+      host: true,
     },
     build: {
       chunkSizeWarningLimit: 5000,
