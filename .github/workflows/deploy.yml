@@ -1,59 +1,30 @@
-name: Deploy to GitHub Pages
+# This workflow is disabled - using gh-pages package for deployment instead
+# 
+# We're using `npm run deploy:gh-pages` for deployment which:
+# 1. Builds the project with GITHUB_PAGES=true
+# 2. Deploys to the gh-pages branch using the gh-pages npm package
+# 
+# To use this workflow instead:
+# 1. Uncomment the workflow below
+# 2. Configure GitHub Pages to use "GitHub Actions" as source
+# 3. Fix environment protection rules if needed
+
+name: Disabled Deploy Workflow
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    inputs:
+      enable:
+        description: 'This workflow is disabled'
+        required: false
+        default: 'false'
 
 jobs:
-  build:
+  disabled:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build project
-        run: npm run build:gh-pages
-        env:
-          NODE_ENV: production
-          GITHUB_PAGES: true
-          GITHUB_REPOSITORY: ${{ github.repository }}
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist/client'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Workflow Disabled
+        run: |
+          echo "This workflow is disabled."
+          echo "Using npm run deploy:gh-pages for deployment instead."
+          echo "Configure GitHub Pages to deploy from the gh-pages branch."
