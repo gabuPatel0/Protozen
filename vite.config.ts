@@ -12,6 +12,9 @@ export default defineConfig(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     plugins: [...mochaPlugins(process.env as any), react(), cloudflare()],
     base: isGitHubPages ? `/${repoName}/` : '/',
+    define: {
+      'import.meta.env.VITE_GITHUB_PAGES': JSON.stringify(process.env.GITHUB_PAGES),
+    },
     server: {
       host: true,
     },
