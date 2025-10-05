@@ -38,11 +38,13 @@
   "scripts": {
     "build": "tsc -b && vite build",
     "build:gh-pages": "cross-env GITHUB_PAGES=true vite build",
+    "build:gh-pages-custom": "cross-env GITHUB_PAGES=true CUSTOM_DOMAIN=true vite build",
     "cf-typegen": "wrangler types",
     "check": "tsc && vite build && wrangler deploy --dry-run",
     "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy:gh-pages": "npm run build:gh-pages && gh-pages -d dist/client"
+    "deploy:gh-pages": "npm run build:gh-pages && gh-pages -d dist/client",
+    "deploy:custom-domain": "npm run build:gh-pages-custom && gh-pages -d dist/client"
   }
 }

@@ -7,11 +7,12 @@ import { mochaPlugins } from "@getmocha/vite-plugins";
 export default defineConfig(() => {
   const isGitHubPages = process.env.GITHUB_PAGES === 'true';
   const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'Protozen';
+  const hasCustomDomain = process.env.CUSTOM_DOMAIN === 'true';
   
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     plugins: [...mochaPlugins(process.env as any), react(), cloudflare()],
-    base: isGitHubPages ? `/${repoName}/` : '/',
+    base: isGitHubPages && !hasCustomDomain ? `/${repoName}/` : '/',
     define: {
       'import.meta.env.VITE_GITHUB_PAGES': JSON.stringify(process.env.GITHUB_PAGES),
     },
